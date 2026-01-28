@@ -44,7 +44,7 @@ function Landing() {
       </Container>
       <Container
         fluid
-        className=" d-flex justify-content-between align-items-center  "
+        className=" d-flex justify-content-between align-items-center "
       >
         <Row className="w-100 mt-5 sm mx-auto g-3">
           <h3 className="text-center mb-4 ">Features</h3>
@@ -111,16 +111,16 @@ function Landing() {
       </Container>
 
       {/* Next-section */}
-      <Container>
-        <Row className="w-100% mt-5">
+      <Container className="border border-secondary rounded mt-5">
+        <Row className="w-100% p-4">
           <Col
             className="flex-column justify-content-center align-items-center"
             sm={12}
             md={6}>
-              <h2>Simple fast and Powerful</h2>
-              <p><span style={{fontSize:"25px"}} >Play Everything </span>: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus sequi explicabo natus. Blanditiis optio, dicta similique saepe esse minus earum sit nobis fuga ad tempore cumque libero id aperiam.</p>
-             <p><span style={{fontSize:"25px"}} >Play Everything </span>: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus sequi explicabo natus. Blanditiis optio, dicta similique saepe esse minus earum sit nobis fuga ad tempore cumque libero id aperiam.</p>
-              <p><span style={{fontSize:"25px"}} >Play Everything </span>: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus sequi explicabo natus. Blanditiis optio, dicta similique saepe esse minus earum sit nobis fuga ad tempore cumque libero id aperiam.</p>
+              <h2 className="fw-bold"><span className="text-warning">Simple fast <br /> and Powerful</span></h2>
+              <p style={{textAlign:"justify"}}><span style={{fontSize:"25px"}} >Play Everything </span>: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus sequi explicabo natus. Blanditiis optio, dicta similique saepe esse minus earum sit nobis fuga ad tempore cumque libero id aperiam.</p>
+             <p style={{textAlign:"justify"}}><span style={{fontSize:"25px"}} >Play Everything </span>: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus sequi explicabo natus. Blanditiis optio, dicta similique saepe esse minus earum sit nobis fuga ad tempore cumque libero id aperiam.</p>
+               <p style={{textAlign:"justify"}}><span style={{fontSize:"25px"}} >Play Everything </span>: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente ducimus sequi explicabo natus. Blanditiis optio, dicta similique saepe esse minus earum sit nobis fuga ad tempore cumque libero id aperiam.</p>
               
             </Col>
           <Col

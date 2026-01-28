@@ -7,6 +7,8 @@ import Row from "react-bootstrap/esm/Row";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
+
 
 function Footer() {
   return (
@@ -28,9 +30,9 @@ function Footer() {
           <Col md={2} className="">
             <h4>Links</h4>
           <ul className="list-unstyled">
-            <li>Landing page</li>
-            <li>Home page</li>
-            <li>Watch history</li>
+            <Link to={"/"}><a><li>Landing page</li></a></Link>
+            <Link to={"/home"}><a><li>Home page</li></a></Link>
+            <Link to={"/watchhistory"}><a><li>Watch history</li></a></Link>
           </ul>
           </Col>
           <Col md={2}>
@@ -44,10 +46,7 @@ function Footer() {
           <Col md={4}>
             <h4>Contact Us</h4>
             <form className="d-flex  gap-">
-                <InputGroup className="mb-3">
-              <Form.Control  type="ema" placeholder="Email Id"/>
-            </InputGroup>
-            
+                <input type="text" placeholder="Email; Id" />
             </form>
           </Col>
         </Row>

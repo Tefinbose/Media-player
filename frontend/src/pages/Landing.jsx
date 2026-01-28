@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 
 function Landing() {
   return (
@@ -29,9 +30,11 @@ function Landing() {
               ullam magnam dolores officiis temporibus beatae. Ipsum esse nobis
               dolores dolore fuga, mollitia quia reprehenderit fugiat quis.
             </p>
-            <Button className="mt-4 sm mb-4" variant="warning">
-              Get Started
-            </Button>
+            <Link to={"/home"}>
+              <Button className="mt-4 sm mb-4" variant="warning">
+                Get Started
+              </Button>
+            </Link>
           </Col>
           <Col
             className="d-flex justify-content-center align-items-center"

@@ -9,7 +9,7 @@ function Header (){
     return(
         <>
       <Navbar className="bg-transparent">
-        <Link to={"/"} style={{textDecoration:"nonex"}}>
+        <Link to={"/"} style={{textDecoration:"none"}}>
           <Container>
             <Navbar.Brand className="text-warning fs-3">
                <FontAwesomeIcon className="" icon={faVideo} beat />

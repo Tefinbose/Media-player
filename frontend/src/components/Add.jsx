@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { videoApi } from "../services/allApi";
 
 
 function Add() {
@@ -29,10 +30,12 @@ function Add() {
     })
   }
  //upload 
- const handleupload = ()=>{
+ const handleupload =async()=>{
     const {caption,image,embedLink}=vedioDetails;
     if(!caption||!image||!embedLink){
       alert("sorry for the inconvenience please fill the form")
+    }else{
+      const result = await videoApi(vedioDetails)
     }
  }
   return (

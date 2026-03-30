@@ -34,13 +34,19 @@ function Add() {
     if (!caption || !image || !embedLink) {
       alert("sorry for the inconvenience please fill the form");
     } else {
-      //https://youtu.be/1lrFsXkT_rM?si=oO8KYALZ0adTPGVb
+      //https://youtu.be/1lrFsXkT_rM?si=oO8KYALZ0adTPGVb (share)
       if (embedLink.startsWith("https://youtu.be")) {
         let link = `https://www.youtube.com/embed/${embedLink.slice(17, 28)}`;
         console.log(link);
         const result = await videoApi({ caption, embedLink: link, image });
         console.log(result);
-        
+
+        if (result.status >= 200 && result.status <= 300) {
+          alert("Video added sucessfully");
+          handleClose()
+        } else {
+          alert("Something went wrong");
+        }
       }
       //https://www.youtube.com/watch?v=1lrFsXkT_rM
       else {
@@ -49,7 +55,13 @@ function Add() {
 
         const result = await videoApi({ caption, embedLink: link, image });
         console.log(result);
-        
+
+        if (result.status >= 200 && result.status <= 300) {
+          alert("Video added sucessfully");
+          handleClose()
+        } else {
+          alert("Something went wrong");
+        }
       }
     }
   };

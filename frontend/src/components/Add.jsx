@@ -13,13 +13,28 @@ function Add() {
     image:"",
     embedLink:""
   })
+  console.log(vedioDetails);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const getValues =(ev)=>{
-      console.log(ev);
-      
+  const handleClose = () => {
+    setShow(false)
+    handleReset()
   }
+  const handleShow = () => setShow(true);
+  // Reset
+  const handleReset =()=> {
+    setvedioDetails({
+    caption:"",
+    image:"",
+    embedLink:""
+    })
+  }
+ //upload 
+ const handleupload = ()=>{
+    const {caption,image,embedLink}=vedioDetails;
+    if(!caption||!image||!embedLink){
+      alert("sorry for the inconvenience please fill the form")
+    }
+ }
   return (
     <>
       <h6 className="fw-bold" onClick={handleShow}> 
@@ -34,16 +49,16 @@ function Add() {
         <Modal.Body>
           <p className="fw-bold">Please fill the following details</p>
           <form className="d-flex flex-column gap-3 border border rounded-1 p-3">
-            <input placeholder="Video-Caption" className="form-control " type="text" onChange={(e)=>{setvedioDetails(...vedioDetails.caption,e.target.value)}} />
-            <input placeholder="Video-Image" className="form-control" type="text"onChange={(e)=>{setvedioDetails(...vedioDetails.image,e.target.value)}} />
-            <input placeholder="Video-Url" className="form-control" type="text" onChange={(e)=>{setvedioDetails(...vedioDetails.embedLink,e.target.value)}} />
+            <input placeholder="Video-Caption"value={vedioDetails.caption} className="form-control " type="text" onChange={(e)=>setvedioDetails({...vedioDetails,caption:e.target.value})} />
+            <input placeholder="Video-Image" value={vedioDetails.image} className="form-control" type="text"onChange={(e)=>setvedioDetails({...vedioDetails,image:e.target.value})}/>
+            <input placeholder="Video-Url" value={vedioDetails.embedLink} className="form-control" type="text" onChange={(e)=>setvedioDetails({...vedioDetails,embedLink:e.target.value})}/>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-           Cancel
+          <Button variant="secondary" onClick={handleReset}>
+           Reset
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleupload}>
             Upload
           </Button>
         </Modal.Footer>

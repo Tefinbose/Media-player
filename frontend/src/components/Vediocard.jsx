@@ -1,4 +1,4 @@
-import { faBucket } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Button from "react-bootstrap/Button";
@@ -24,7 +24,7 @@ function Vediocard() {
             <div className="d-flex gap-5 sm d-flex justify-content-between">
               <Card.Title>Card Title</Card.Title>
               <Button className="text-danger" variant="primary">
-                <FontAwesomeIcon className="" icon={faBucket} />
+                <FontAwesomeIcon className="" icon={faTrash} /> 
               </Button>
             </div>
           </Card.Body>

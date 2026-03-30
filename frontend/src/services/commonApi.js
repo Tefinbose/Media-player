@@ -10,9 +10,9 @@ export const commonApi = async (httpMethod, url, reqBody) => {
 
   return await axios(reqConfig)
     .then((res) => {
-      return res;      
+      return res;  
     })
     .catch((err) => {
-      return err;      // reject
+      return err.message;      // reject
     });
 };

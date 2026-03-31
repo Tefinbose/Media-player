@@ -1,10 +1,13 @@
 import { faCloudArrowUp, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { videoApi } from "../services/allApi";
+
+
 
 function Add() {
   const [show, setShow] = useState(false);
@@ -32,7 +35,7 @@ function Add() {
   const handleupload = async () => {
     const { caption, image, embedLink } = vedioDetails;
     if (!caption || !image || !embedLink) {
-      alert("sorry for the inconvenience please fill the form");
+      toast.error("sorry for the inconvenience please fill the form");
     } else {
       //https://youtu.be/1lrFsXkT_rM?si=oO8KYALZ0adTPGVb (share)
       if (embedLink.startsWith("https://youtu.be")) {
@@ -42,10 +45,11 @@ function Add() {
         console.log(result);
 
         if (result.status >= 200 && result.status <= 300) {
-          alert("Video added sucessfully");
-          handleClose()
+          toast.success("Video added sucessfully");
+          handleClose();
         } else {
-          alert("Something went wrong");
+          toast.error("Something went wrong");
+          handleReset();
         }
       }
       //https://www.youtube.com/watch?v=1lrFsXkT_rM
@@ -57,10 +61,11 @@ function Add() {
         console.log(result);
 
         if (result.status >= 200 && result.status <= 300) {
-          alert("Video added sucessfully");
-          handleClose()
+          toast.success("Video added sucessfully");
+          handleClose();
         } else {
-          alert("Something went wrong");
+          toast.alert("Something went wrong");
+          handleReset();
         }
       }
     }
@@ -118,6 +123,8 @@ function Add() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+       <ToastContainer position='top-center' theme='colored' autoClose={2000} />
     </>
   );
 }

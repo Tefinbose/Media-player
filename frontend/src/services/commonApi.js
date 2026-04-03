@@ -5,7 +5,7 @@ export const commonApi = async (httpMethod, url, reqBody) => {
     method: httpMethod,
     url,
     data: reqBody,
-    headers: { "Content-Type": "application/json" }, //There's no uploaded content here
+    headers: { "Content-Type": "application/json"}, //There's no uploaded content here
   };
 
   return await axios(reqConfig)

@@ -9,7 +9,7 @@ import { videoApi } from "../services/allApi";
 
 
 
-function Add() {
+function Add({setAddVedioStatus}) {
   const [show, setShow] = useState(false);
   const [vedioDetails, setvedioDetails] = useState({
     caption: "",
@@ -47,6 +47,8 @@ function Add() {
         if (result.status >= 200 && result.status <= 300) {
           toast.success("Video added sucessfully");
           handleClose();
+          setAddVedioStatus(result.data)
+
         } else {
           toast.error("Something went wrong");
           handleReset();
@@ -63,6 +65,7 @@ function Add() {
         if (result.status >= 200 && result.status <= 300) {
           toast.success("Video added sucessfully");
           handleClose();
+          setAddVedioStatus(result.data)
         } else {
           toast.alert("Something went wrong");
           handleReset();

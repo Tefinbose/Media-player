@@ -10,3 +10,7 @@ export const videoApi =async(reqBody)=>{
 export const Allvedioapi =async()=>{
     return await commonApi("GET",`${serverUrl}/videos`)
 }
+// To delete a video
+export const DeleteVedio =async(id)=>{
+    return await commonApi("DELETE",`${serverUrl}/videos/${id}`,{})
+}

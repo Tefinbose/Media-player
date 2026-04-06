@@ -7,9 +7,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { videoApi } from "../services/allApi";
 
-
-
-function Add({setAddVedioStatus}) {
+function Add({ setAddVedioStatus }) {
   const [show, setShow] = useState(false);
   const [vedioDetails, setvedioDetails] = useState({
     caption: "",
@@ -47,8 +45,8 @@ function Add({setAddVedioStatus}) {
         if (result.status >= 200 && result.status <= 300) {
           toast.success("Video added sucessfully");
           handleClose();
-          setAddVedioStatus(result.data)
-
+          setAddVedioStatus(result.data);
+          console.log(result);
         } else {
           toast.error("Something went wrong");
           handleReset();
@@ -65,7 +63,8 @@ function Add({setAddVedioStatus}) {
         if (result.status >= 200 && result.status <= 300) {
           toast.success("Video added sucessfully");
           handleClose();
-          setAddVedioStatus(result.data)
+          setAddVedioStatus(result.data);
+          
         } else {
           toast.alert("Something went wrong");
           handleReset();
@@ -127,7 +126,7 @@ function Add({setAddVedioStatus}) {
         </Modal.Footer>
       </Modal>
 
-       <ToastContainer position='top-center' theme='colored' autoClose={2000} />
+      <ToastContainer position="top-center" theme="colored" autoClose={2000} />
     </>
   );
 }

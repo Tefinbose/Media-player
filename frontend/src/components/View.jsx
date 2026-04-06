@@ -4,8 +4,9 @@ import { Allvedioapi } from "../services/allApi";
 
 function View({addVedioStatus}) {
   console.log(addVedioStatus);
-  
   const [allVedio, setAllVedio] = useState([]); //data from the server are array of objects so we used the empty array
+
+  const [deleteVedioStatus,setdeleteVedioStatus]=useState({})
 
   const getAllVedio = async () => {
     const result = await Allvedioapi(); // we need to get the data when the page loads , so we use the useEffect()
@@ -19,7 +20,7 @@ function View({addVedioStatus}) {
   //  Which is used to call this function when the page loads
   useEffect(() => {
     getAllVedio();
-  }, [addVedioStatus]);
+  }, [addVedioStatus,deleteVedioStatus]);
 
   return (
     <>
@@ -30,7 +31,7 @@ function View({addVedioStatus}) {
           allVedio?.length > 0 ? (
             allVedio.map((items, index) => (
               <div className="col-md-3 p-3 " key={index}>
-                <Vediocard video={items} />
+                <Vediocard video={items} setdeleteVedioStatus={setdeleteVedioStatus}/>
               </div>
             ))
           ) : (

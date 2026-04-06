@@ -14,3 +14,7 @@ export const Allvedioapi =async()=>{
 export const DeleteVedio =async(id)=>{
     return await commonApi("DELETE",`${serverUrl}/videos/${id}`,{})
 }
+// Api to add watchhistory
+export const addVedioHistoryApi =async(reqBody)=>{
+    return await commonApi("POST",`${serverUrl}/history`,reqBody)
+}

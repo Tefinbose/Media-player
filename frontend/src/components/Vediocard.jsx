@@ -5,15 +5,18 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { DeleteVedio } from "../services/allApi";
+import { addVedioHistoryApi, DeleteVedio } from "../services/allApi";
 
 function Vediocard({ video, setdeleteVedioStatus }) {
   // console.log(video);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  const handleShow = () => {
+    setShow(true);
+    addWatchHistory()
+  }
+  // For deleting the video
   const deleteVediobyid = async (vedioId) => {
     const result = await DeleteVedio(vedioId);
     console.log(result);
@@ -22,10 +25,26 @@ function Vediocard({ video, setdeleteVedioStatus }) {
     }
   };
 
+  // For add the watching history
+  const addWatchHistory = async () => {
+    let caption = video?.caption;
+    let url = video?.embedLink;
+    const time = new Date();
+    // console.log(time);
+    // const result = new Intl.DateTimeFormat("en-GB",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(time);
+    // console.log(result);
+    const response = await addVedioHistoryApi ({caption,url,time })
+    console.log(response);
+  };
+
   return (
     <>
       <div>
-        <Card>
+        <Card
+          onClick={(body) => {
+            addWatchHistory(body);
+          }}
+        >
           <Card.Img
             onClick={handleShow}
             style={{ height: "250px", objectFit: "cover" }}
@@ -70,11 +89,10 @@ function Vediocard({ video, setdeleteVedioStatus }) {
             <iframe
               style={{ width: "100%", height: "300px" }}
               src={`${video?.embedLink}?autoplay=1`}
-              title="Gigi Perez - Sailor Song (Official Music Video)"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             ></iframe>
           </Modal.Body>
         </Modal>

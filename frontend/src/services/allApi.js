@@ -18,3 +18,11 @@ export const DeleteVedio =async(id)=>{
 export const addVedioHistoryApi =async(reqBody)=>{
     return await commonApi("POST",`${serverUrl}/history`,reqBody)
 }
+// Get watchhistory
+export const GetWatchHistory = async()=>{
+    return await commonApi("GET",`${serverUrl}/history`)
+}
+// Api to delete videoHistory 
+export const deleteVideoHistory =async(id)=>{
+    return await commonApi("DELETE",`${serverUrl}/history/${id}`,{})
+}

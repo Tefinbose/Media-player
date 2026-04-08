@@ -1,26 +1,35 @@
 import { faHouse, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon ,} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { GetWatchHistory } from "../services/allApi";
-
+import { deleteVideoHistory, GetWatchHistory } from "../services/allApi";
 
 function Watchhistory() {
-  const [Videohistory,setVideoHistory]=useState([])
+  const [Videohistory, setVideoHistory] = useState([]);
+  const [deleteHistoryStatus,setdeleteHistoryStatus]= useState({})
 
-  const getAllWatchHistory = async ()=>{
-    let result = await  GetWatchHistory()
+  // Function to getallawtchhistory
+  const getAllWatchHistory = async () => {
+    let result = await GetWatchHistory();
     console.log(result);
-   if(result.status >=200 && result.status<=300){
-   setVideoHistory(result.data)
-   }
-  }
-  
-// Works when page loads
-  useEffect(()=>{
-    getAllWatchHistory()
-  },[])
-  
+    if (result.status >= 200 && result.status <= 300) {
+      setVideoHistory(result.data);
+    }
+  };
+
+  // Funtion to delete the watchhistory based on id
+  const deleteWatchHistory = async (id) => {
+    const result = await deleteVideoHistory(id);
+    if(result.status>=200 && result.status<=300){
+        setdeleteHistoryStatus(result.data)
+    }
+  };
+
+  // Works when page loads
+  useEffect(() => {
+    getAllWatchHistory();
+  }, [deleteHistoryStatus]);
+
   return (
     <>
       <div className="container d-flex justify-content-between align-items-center">
@@ -33,41 +42,49 @@ function Watchhistory() {
         </Link>
       </div>
       <div className="container mt-5 table-responsive">
-       {
-        Videohistory?.length>0 ?
-         <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th className="p-4 text-center">Sl No</th>
-              <th className="p-4 text-center">Caption</th>
-              <th className="p-4 text-center">Url</th>
-              <th className="p-4 text-center">Timestamp</th>
-              <th className="p-4 text-center">action</th>
-            </tr>
-          </thead>
-          <tbody className="">
-           {
-            Videohistory.map((items,index)=>(
-               <tr className="text-center">
-              <td >{index}</td>
-            <td >{items.caption}</td>
-           <Link to={`${items?.url}`}> <td >{items.url}</td></Link>
-            <td >{items.time}</td>
-            <td><button className="btn-danger border border-rounded"><FontAwesomeIcon icon={faTrash}/></button></td>
-            </tr>
-            ))
-           }
-          </tbody>
-        </table>
-        :
-        <div className="text-danger">
-            <h1>History is cleared</h1>
-        </div>
-       }
+        {Videohistory?.length > 0 ? (
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th className="p-4 text-center">Sl No</th>
+                <th className="p-4 text-center">Caption</th>
+                <th className="p-4 text-center">Url</th>
+                <th className="p-4 text-center">Timestamp</th>
+                <th className="p-4 text-center">action</th>
+              </tr>
+            </thead>
+            <tbody className="">
+              {Videohistory.map((items, index) => (
+                <tr className="text-center">
+                  <td>{index}</td>
+                  <td>{items.caption}</td>
+                  <Link to={`${items?.url}`}>
+                    {" "}
+                    <td>{items.url}</td>
+                  </Link>
+                  <td>{items.time}</td>
+                  <td>
+                    <button className="btn-danger border border-rounded">
+                      <FontAwesomeIcon
+                        onClick={() => deleteWatchHistory(items.id)}
+                        icon={faTrash}
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="text-danger">
+            <h3>History is cleared</h3>
+          </div>
+        )}
       </div>
     </>
   );
-
 }
 
-export default Watchhistory
+export default Watchhistory;
+
+

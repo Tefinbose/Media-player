@@ -14,8 +14,8 @@ function Vediocard({ video, setdeleteVedioStatus }) {
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
-    addWatchHistory()
-  }
+    addWatchHistory();
+  };
   // For deleting the video
   const deleteVediobyid = async (vedioId) => {
     const result = await DeleteVedio(vedioId);
@@ -33,14 +33,24 @@ function Vediocard({ video, setdeleteVedioStatus }) {
     // console.log(time);
     // const result = new Intl.DateTimeFormat("en-GB",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(time);
     // console.log(result);
-    const response = await addVedioHistoryApi ({caption,url,time })
+    const response = await addVedioHistoryApi({ caption, url, time });
     console.log(response);
+  };
+
+  const VedioDragandDrop = async (e, video) => {
+    console.log(e);
+    console.log(video);
+    e.dataTransfer.setData("vedioDetails", JSON.stringify(video));
   };
 
   return (
     <>
       <div>
         <Card
+          draggable
+          onDragStart={(e) => {
+            VedioDragandDrop(e, video);
+          }}
           onClick={(body) => {
             addWatchHistory(body);
           }}

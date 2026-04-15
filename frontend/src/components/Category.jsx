@@ -4,16 +4,20 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { faBucket, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { addCategoryApi, deleteCategoryApi, getCategoryApi } from "../services/allApi";
+import {
+  addCategoryApi,
+  deleteCategoryApi,
+  getCategoryApi,
+} from "../services/allApi";
 import Vediocard from "./Vediocard";
 import { toast, ToastContainer } from "react-toastify";
-
 
 export default function Category() {
   const [show, setShow] = useState(false);
   const [categoryName, setcategoryName] = useState("");
-  const [allCategory,setallCategory]=useState([]);
-  
+  const [addCategoryStatus, setCategoryStatus] = useState({});
+  const [allCategory, setallCategory] = useState([]);
+  const [deleteCategoryStatus, SetdeleteCategoryStatus] = useState({});
 
   const handleClose = () => {
     setShow(false);
@@ -35,6 +39,7 @@ export default function Category() {
       console.log(result);
       if (result.status >= 200 && result.status <= 300) {
         toast.success("Category added successfully");
+        setCategoryStatus(result.data);
         handleClose();
       } else {
         toast.error("Something went wrong");
@@ -45,26 +50,43 @@ export default function Category() {
     }
   };
   // Function to getAllCategory
-  const getAllCtegory =async()=>{
-    const result = await getCategoryApi()
+  const getAllCtegory = async () => {
+    const result = await getCategoryApi();
     console.log(result);
-    if(result.status >=200 && result.status<300){
-      setallCategory(result.data)
+    if (result.status >= 200 && result.status < 300) {
+      setallCategory(result.data);
     }
-  }
-// console.log(allCategory);
-const deleteCategory=async(id)=>{
-  const result = await deleteCategoryApi(id)
-  console.log(result);
-  if(result.status>=200 && result.status<=300){
-
-  }
-}
-
-  useEffect(()=>{
-    getAllCtegory()
-
-  },[allCategory])
+  };
+  // console.log(allCategory);
+  const deleteCategory = async (id) => {
+    const result = await deleteCategoryApi(id);
+    console.log(result);
+    if (result.status >= 200 && result.status <= 300) {
+      SetdeleteCategoryStatus(result.data);
+    }
+  };
+  const videoOver = async (e) => {
+    // For preventing the data loss or browsers default behavior
+    e.preventDefault();
+    // console.log(e);
+  };
+  const videoDrop = async (e, categoryName) => {
+    console.log(e);
+    console.log(categoryName);
+    const vedioDetails = e.dataTransfer.getData("vedioDetails");
+    console.log(vedioDetails);
+    for(let items of allCategory){
+      if(allCategory.includes(items)){
+        console.log("You already have the vedio");
+        
+      }else{
+        setallCategory(allCategory)
+      }
+    }
+  };
+  useEffect(() => {
+    getAllCtegory();
+  }, [addCategoryStatus, deleteCategoryStatus]);
 
   return (
     <>
@@ -75,26 +97,36 @@ const deleteCategory=async(id)=>{
         </Button>
       </div>
 
-
-
-     {
-     allCategory?.length>0? 
-    allCategory.map((items,index)=>(
-       <div>
-      
-      <div  key={index} className="d-flex justify-content-between align-items-center border border-primary p-4 mt-3">
-        <h6 className="text-danger">{items.Categoryname}</h6>
-        <FontAwesomeIcon onClick={()=>deleteCategory(items?.id)}  className="" icon={faTrash} />
-      </div>
-      <div className="mt-4">{/* < Vediocard/> */}</div>
-     </div>
-    
-    ))
-     :
-      <div>
-        <h4 className="text-danger text-center mt-4">No category added yet</h4>
-      </div>
-     }
+      {allCategory?.length > 0 ? (
+        allCategory.map((items, index) => (
+          <div
+            key={index}
+            droppable={true}
+            onDragOver={(e) => {
+              videoOver(e);
+            }}
+            onDrop={(e) => {
+              videoDrop(e, items);
+            }}
+          >
+            <div className="d-flex justify-content-between align-items-center border border-primary p-4 mt-3">
+              <h6 className="text-danger">{items.Categoryname}</h6>
+              <FontAwesomeIcon
+                onClick={() => deleteCategory(items?.id)}
+                className=""
+                icon={faTrash}
+              />
+            </div>
+            <div className="mt-4">{/* < Vediocard/> */}</div>
+          </div>
+        ))
+      ) : (
+        <div>
+          <h4 className="text-danger text-center mt-4">
+            No category added yet
+          </h4>
+        </div>
+      )}
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -124,6 +156,3 @@ const deleteCategory=async(id)=>{
     </>
   );
 }
-
-
-

@@ -7,7 +7,7 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { addVedioHistoryApi, DeleteVedio } from "../services/allApi";
 
-function Vediocard({ video, setdeleteVedioStatus }) {
+function Vediocard({ video, setdeleteVedioStatus,isPresent}) {
   // console.log(video);
   const [show, setShow] = useState(false);
 
@@ -55,13 +55,13 @@ function Vediocard({ video, setdeleteVedioStatus }) {
             addWatchHistory(body);
           }}
         >
-          <Card.Img
+          { !isPresent &&<Card.Img
             onClick={handleShow}
             style={{ height: "250px", objectFit: "cover" }}
             className=""
             variant="top"
             src={video?.image}
-          />
+          />}
           <Card.Body>
             <div className="d-flex justify-content-between align-items">
               <Card.Title
@@ -75,7 +75,7 @@ function Vediocard({ video, setdeleteVedioStatus }) {
               >
                 {video?.caption}
               </Card.Title>
-              <Button
+             { !isPresent &&<Button
                 style={{ flexShrink: 0 }}
                 className="text-danger"
                 variant="primary"
@@ -86,6 +86,7 @@ function Vediocard({ video, setdeleteVedioStatus }) {
                   onClick={() => deleteVediobyid(video?.id)}
                 />
               </Button>
+}
             </div>
           </Card.Body>
         </Card>

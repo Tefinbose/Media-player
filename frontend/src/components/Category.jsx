@@ -8,6 +8,7 @@ import {
   addCategoryApi,
   deleteCategoryApi,
   getCategoryApi,
+  updateCategoryApi,
 } from "../services/allApi";
 import Vediocard from "./Vediocard";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,6 +19,7 @@ export default function Category() {
   const [addCategoryStatus, setCategoryStatus] = useState({});
   const [allCategory, setallCategory] = useState([]);
   const [deleteCategoryStatus, SetdeleteCategoryStatus] = useState({});
+  const [updateCategoryStatus, SetUpdateCategoryStatus] = useState({});
 
   const handleClose = () => {
     setShow(false);
@@ -73,20 +75,25 @@ export default function Category() {
   const videoDrop = async (e, categoryName) => {
     console.log(e);
     console.log(categoryName);
-    const vedioDetails = e.dataTransfer.getData("vedioDetails");
+    const vedioDetails = JSON.parse(e.dataTransfer.getData("vedioDetails"));
     console.log(vedioDetails);
-    for(let items of allCategory){
-      if(allCategory.includes(items)){
-        console.log("You already have the vedio");
-        
-      }else{
-        setallCategory(allCategory)
+    if (categoryName.allvedios.find((items) => items.id === vedioDetails.id)) {
+      toast.error("You have already added the array");
+    } else {
+      categoryName.allvedios.push(vedioDetails);
+      console.log(categoryName);
+
+      const result = await updateCategoryApi(categoryName.id, categoryName);
+      console.log(result);
+      if (result.status >= 200 && result.status <= 200) {
+        SetUpdateCategoryStatus(result.data);
       }
     }
   };
+
   useEffect(() => {
     getAllCtegory();
-  }, [addCategoryStatus, deleteCategoryStatus]);
+  }, [addCategoryStatus, deleteCategoryStatus, updateCategoryStatus]);
 
   return (
     <>
@@ -117,7 +124,13 @@ export default function Category() {
                 icon={faTrash}
               />
             </div>
-            <div className="mt-4">{/* < Vediocard/> */}</div>
+           {
+            items?.allvedios?.map((video)=>(
+               <div className="mt-4">
+              <Vediocard video={video} isPresent={true} />
+            </div>
+            ))
+           }
           </div>
         ))
       ) : (
